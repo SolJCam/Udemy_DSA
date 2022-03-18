@@ -94,70 +94,36 @@ class BST:
 
         new_node = ''
 
+        pdb.set_trace()
         if right != None and right.left != None:
             new_node = right.left
             while new_node.left != None:
                 new_node = new_node.left
+            if new_node.left == None:
+                new_node.parent.left = None
+            new_node.left = left
+            new_node.right = right
+            new_node.parent = parent
+            node.parent.left = new_node
         elif right != None and right.left == None:
             new_node = right
-            new_node.parent.right = new_node.right
-        elif left != None and left.left != None:
+            new_node.left = left
+            new_node.parent.right = None
+            node.parent.left = new_node
+            # pdb.set_trace()
+        elif left != None:
+        # elif left != None and left.left != None:
             new_node = left
             while new_node.left != None:
                 new_node = new_node.left
-        else:
-            print(f"No node value {value}")
-            return None  
-        
-        # while new_node.left != None:
-        #     new_node = node.left
-
-        if new_node.left == None:
             new_node.parent.left = None
-
-        pdb.set_trace() 
-        new_node.left = left
-        new_node.right = right
-        new_node.parent = parent
-            
-        node.parent.left = new_node
+            node.parent.left = new_node
+        else:
+            print(f"Cannot find node value: {value}")
+            return None
 
         print(f"Replacement node: {new_node.value}")
-        return node.value 
-                 
-
-
-        # node = self.root        
-        # while node != None:
-        #     if node.value > value:
-        #         node = node.left
-        #         # pdb.set_trace()
-        #     elif node.value == value:
-        #         if node.right == None and node.left == None:
-        #             node.parent.left = None
-        #             print(f"Replacement node: None")
-        #             return node.parent.left  
-        #         new_node = node.right
-        #         while new_node.left != None:
-        #             new_node = new_node.left
-        #         # node = new_node  
-
-        #         left = node.left 
-        #         right = node.right 
-        #         parent = node.parent
-
-        #         new_node.left = left
-        #         new_node.right = right
-        #         new_node.parent = parent
-                 
-        #         node.parent.left = new_node
-        #         new_node.parent.left = None
-
-        #         print(f"Replacement node: {new_node.value}")
-        #         return node.value                 
-        #     else:
-        #         print(f"No node value {value}")
-        #         return None      
+        return node.value      
 
                 
     # def __traverse__(self, node):
@@ -218,13 +184,15 @@ bst.insert(20)
 #   remove
 # bst.remove(11)
 # bst.remove(5)
-bst.remove(2)
-# bst.remove(4)
+# bst.remove(2)
+bst.remove(4)
 # bst.remove(1)
 # bst.remove(7)
+
 # bst.remove(6)
 # bst.remove(8)
 print(traverse(bst.root))
+# print(bst.lookup(4))
 # print(bst.lookup(7))
 # print(bst.lookup(11))
 # print(bst.lookup(13))
