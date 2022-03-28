@@ -4,7 +4,7 @@ import pdb
 class Node:
     def __init__(self, value):
         self.value = value
-        self.parent = None  ##
+        self.parent = None ##
         self.left = None
         self.right = None
 
@@ -73,57 +73,48 @@ class BST:
                     self.__traverse_to_lookup__(start_node, value)
 
     def remove(self, value):
-        root = self.root
-        if root.value == value:
-            root = root.right
-            while root.left != None:
-                root = root.left
-            left = self.root.left 
-            right = self.root.right 
-            root.left = left
-            root.right = right
-            root.parent.left = None ##
-            self.root = root    
-            print(f"Root: {self.root.value}")
-            return self.root.value   
-
-        node = self.lookup_sol(value)
-        parent = node.parent
-        left = node.left
-        right = node.right
-
-        new_node = ''
-
-        pdb.set_trace()
-        if right != None and right.left != None:
-            new_node = right.left
-            while new_node.left != None:
-                new_node = new_node.left
-            if new_node.left == None:
-                new_node.parent.left = None
-            new_node.left = left
-            new_node.right = right
-            new_node.parent = parent
-            node.parent.left = new_node
-        elif right != None and right.left == None:
-            new_node = right
-            new_node.left = left
-            new_node.parent.right = None
-            node.parent.left = new_node
-            # pdb.set_trace()
-        elif left != None:
-        # elif left != None and left.left != None:
-            new_node = left
-            while new_node.left != None:
-                new_node = new_node.left
-            new_node.parent.left = None
-            node.parent.left = new_node
-        else:
-            print(f"Cannot find node value: {value}")
+        old_node = self.lookup_sol(value)
+        if old_node == None:
+            print(f"No node value {value}")
             return None
 
-        print(f"Replacement node: {new_node.value}")
-        return node.value      
+        new_node = value + 1
+        exists = ''
+        while new_node != None:
+            exists = self.lookup_sol(new_node)
+            if exists != None:
+                new_node = None
+            else:
+                new_node += 1
+
+        new_node_parent = exists.parent
+        pdb.set_trace()
+        if new_node_parent.left != None:
+            if new_node_parent.left.value == exists.value:
+                new_node_parent.left = exists.left
+        if new_node_parent.right != None:
+            if new_node_parent.right.value == exists.value:
+                new_node_parent.right = exists.right
+
+        left = old_node.left
+        right = old_node.right
+        exists.left = left
+        exists.right = right 
+        if old_node.parent != None:
+            parent = old_node.parent
+            if parent.left != None:
+                if parent.left.value == old_node.value:
+                    parent.left = exists
+            if parent.right != None:
+                if parent.right.value == old_node.value:
+                    parent.right = exists
+            exists.parent = parent
+        else:
+            exists.parent = None
+            self.root = exists
+
+        print(f"Replacement node: {exists.value}")
+        return exists.value
 
                 
     # def __traverse__(self, node):
@@ -185,12 +176,18 @@ bst.insert(20)
 # bst.remove(11)
 # bst.remove(5)
 # bst.remove(2)
-bst.remove(4)
+# bst.remove(4)
 # bst.remove(1)
 # bst.remove(7)
-
 # bst.remove(6)
-# bst.remove(8)
+bst.remove(8)
+# bst.remove(21)
+# bst.remove(16)
+# bst.remove(23)
+# bst.remove(15)
+# bst.remove(19)
+# bst.remove(12)
+# bst.remove(10)
 print(traverse(bst.root))
 # print(bst.lookup(4))
 # print(bst.lookup(7))
