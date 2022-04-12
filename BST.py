@@ -82,13 +82,13 @@ class BST:
         exists = ''
         while new_node != None:
             exists = self.lookup_sol(new_node)
-            if exists != None:
+            if exists != None and exists != self.root:
                 new_node = None
             else:
                 new_node += 1
 
         new_node_parent = exists.parent
-        pdb.set_trace()
+        # pdb.set_trace()
         if new_node_parent.left != None:
             if new_node_parent.left.value == exists.value:
                 new_node_parent.left = exists.left
@@ -180,10 +180,10 @@ bst.insert(20)
 # bst.remove(1)
 # bst.remove(7)
 # bst.remove(6)
-bst.remove(8)
+bst.remove(8) # not working
 # bst.remove(21)
 # bst.remove(16)
-# bst.remove(23)
+# bst.remove(23) # not working
 # bst.remove(15)
 # bst.remove(19)
 # bst.remove(12)
